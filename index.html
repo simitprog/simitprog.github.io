@@ -3,35 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archivio Compiti HTML</title>
-    <link rel="stylesheet" href="stile.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Portfolio | Timis Alexandro</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>I miei Compiti</h1>
-            <p class="subtitle">Home di tutti i miei compiti</p>
-        </header>
-        
-        <nav>
-            <ul class="project-list">
-                <li class="project-item">
-                    <a href="primoSito/index.html" class="project-link">Primo Sito Web</a>
-                </li>
-                <li class="project-item">
-                    <a href="mantova/index.html" class="project-link">Esercizio CSS - Mantova</a>
-                </li>
-                <li class="project-item">
-                    <a href="mondoAnimale/index.html" class="project-link">Il Mondo Animale</a>
-                </li>
-                <li class="project-item">
-                    <a href="tabellaPitagorica/index.html" class="project-link">Tabella Pitagorica</a>
-                </li>
-                </ul>
-        </nav>
-    </div>
+    <nav id="nav-principale">
+        <div class="container">
+            <ul>
+                <li><a href="#about" class="nav-link">Chi sono</a></li>
+                <li><a href="#competenze" class="nav-link">Competenze</a></li>
+                <li><a href="#progetti" class="nav-link">Progetti</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Timis Alexandro</h1>
+            <p class="hero-intro">
+                Studente al 4° anno di Informatica e Telecomunicazioni. 
+                Sto costruendo le mie basi nel Web Design attraverso questo percorso professionale.
+            </p>
+            <a href="/cartellaBase/index.html" class="btn">Guarda i miei progetti</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="about" class="sezione">
+            <h2>Chi sono</h2>
+            <p>Sono Timis Alexandro, frequento il quarto anno dell'indirizzo Informatica e Telecomunicazioni.</p>
+            <blockquote>
+                <p>Il software è una combinazione di arte e ingegneria.</p>
+                <footer>— Bill Gates</footer>
+            </blockquote>
+        </section>
+
+        <section id="competenze" class="sezione">
+            <h2>Competenze</h2>
+            <ul class="lista-competenze">
+                <li><strong>HTML</strong> — Struttura semantica e accessibilità</li>
+                <li><strong>CSS</strong> — Cascade, box model e selettori</li>
+                <li><strong>JavaScript</strong> — Basi in corso di apprendimento</li>
+                <li><strong>Git</strong>Versionamento e GitHub</li>
+                <li><strong>VS Code</strong>editor e estensioni</li>
+            </ul>
+        </section>
+
+        <section id="progetti" class="sezione">
+            <h2>Progetti</h2>
+            <div class="card">
+                <h3>Sviluppo Portfolio</h3>
+                <p>Pagina che condcuce ai progetti svolti</p>
+                <a href="/cartellaBase/index.html" class="btn-small">Dettagli</a>
+            </div>
+        </section>
+
+        <section id="faq" class="sezione">
+            <h2>Domande Frequenti</h2>
+            <div class="faq-item">
+                <h3>Qual è il tuo percorso di studi attuale?</h3>
+                <p>Frequento il 4° anno di Informatica e Telecomunicazioni, dove approfondisco sia lo sviluppo software che le infrastrutture di rete.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Che altri linguaggi di programmazione conosci?</h3>
+                <p>C, C++, Java e Python</p>
+            </div>
+            <div class="faq-item">
+                <h3>Quali tecnologie intendi approfondire in futuro?</h3>
+                <p>Dopo aver consolidato CSS e JavaScript, vorrei esplorare il mondo della sicurezza delle reti.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-principale">
+        <div class="container">
+            <p>&copy; 2026 Timis Alexandro — Portfolio</p>
+            <ul>
+                <li><a>GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
 
 </body>
 </html>
