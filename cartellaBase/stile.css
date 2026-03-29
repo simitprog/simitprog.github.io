@@ -1,6 +1,6 @@
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f4f7f6;
+    background-color: #f0f4f8; /* Il tuo grigio-azzurro di sfondo */
     margin: 0;
     display: flex;
     justify-content: center;
@@ -24,12 +24,12 @@ header {
 
 h1 {
     margin: 0;
-    color: #2d3436;
+    color: #2c3e50; /* Il blu scuro dei tuoi titoli */
     font-size: 28px;
 }
 
 .subtitle {
-    color: #636e72;
+    color: #555; /* Grigio coerente con il tuo about */
     font-size: 0.9rem;
     margin-top: 5px;
 }
@@ -48,10 +48,10 @@ h1 {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #2d3436;
+    color: #2c3e50;
     padding: 18px 25px;
     background: #fff;
-    border: 1px solid #edf2f7;
+    border: 1px solid #d1d9e6; /* Bordo azzurrino coerente */
     border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 600;
@@ -60,8 +60,8 @@ h1 {
 .project-link::before {
     counter-increment: list-counter;
     content: counter(list-counter);
-    background: #f1f2f6;
-    color: #4f46e5;
+    background: #f8fbff; /* Sfondo chiaro del tuo blockquote */
+    color: #4a90e2; /* Il tuo azzurro principale */
     width: 28px;
     height: 28px;
     display: flex;
@@ -70,17 +70,19 @@ h1 {
     border-radius: 50%;
     margin-right: 15px;
     font-size: 0.85rem;
+    border: 1px solid #d1d9e6;
 }
 
 .project-link:hover {
-    background-color: #4f46e5;
+    background-color: #4a90e2; /* Hover con il tuo azzurro */
     color: white;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    border-color: #4a90e2;
 }
 
 .project-link:hover::before {
     background: rgba(255, 255, 255, 0.2);
     color: white;
+    border-color: transparent;
 }
