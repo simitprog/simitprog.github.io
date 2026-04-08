@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>Form di Registrazione</title>
+    </head>
+    
+    <body>
+
+        <h1 style="font-weight: bold;">REGISTRAZIONE UTENTE</h1>
+        <br>
+
+        <label>Cognome: </label>
+        <input type="text" id="textBoxCognome"> <br><br>
+
+        <label>Nome: </label>
+        <input type="text" id="textBoxNome"> <br><br>
+
+        <label>Codice Fiscale: </label>
+        <input type="text" id="textCodiceFiscale" maxlength="16"> <br><br>
+
+        <label>Sesso: </label>
+        <input type="radio" name="radioSesso" id="radioM" value="M"> M
+        <input type="radio" name="radioSesso" id="radioF" value="F"> F 
+        <br><br>
+
+        <label>Anno di nascita: </label>
+        <select id="comboAnno"></select>
+        <br><br>
+
+        <input type="checkbox" id="chk1">
+        <label for="chk1">Accetto i termini del servizio</label>
+        <br><br>
+
+        <button type="button" onclick="gestisciRegistrazione()">REGISTRATI</button>
+
+        <p id="messaggioRisposta"></p>
+
+        <script src="script.js"></script>
+    </body>
+</html>
