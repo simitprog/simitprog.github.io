@@ -7,76 +7,90 @@
     <title>Portfolio | Timis Alexandro</title>
 </head>
 <body>
-    <header class="hero">
-        <h1>Timis Alexandro</h1>
-        <p class="hero-intro">
-            Studente al 4° anno di Informatica e Telecomunicazioni al Jean Monnet di Mariano Comense.
-        </p>
-        <a href="#progetti" class="btn">Guarda i miei progetti</a>
-    </header>
 
     <nav id="nav-principale">
-        <ul>
-            <li><a href="#about" class="nav-link">Chi sono</a></li>
-            <li><a href="#competenze" class="nav-link">Competenze</a></li>
-            <li><a href="#progetti" class="nav-link">Progetti</a></li>
-            <li><a href="#faq" class="nav-link">FAQ</a></li>
-            <li><a href="https://github.com/simitprog" class="nav-link">GitHub</a></li>
-        </ul>
+        <div class="nav-container">
+            <ul>
+                <li><a href="#about" class="nav-link">Chi sono</a></li>
+                <li><a href="#competenze" class="nav-link">Competenze</a></li>
+                <li><a href="#progetti" class="nav-link">Progetti</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="https://github.com/simitprog" class="nav-link">GitHub</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <main>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Timis Alexandro</h1>
+            <p class="hero-intro">
+                Studente al 4° anno di <strong>Informatica e Telecomunicazioni</strong> presso il Jean Monnet.
+            </p>
+            <a href="#progetti" class="btn">Esplora i miei progetti</a>
+        </div>
+    </header>
+
+    <main class="container">
         <section id="about" class="sezione">
             <h2>Chi sono</h2>
-            <p>Frequento il quarto anno dell'indirizzo Informatica e Telecomunicazioni. Mi appassiona lo sviluppo software e l'architettura dei sistemi.</p>
-            <blockquote>
-                <p>Il software è una combinazione di arte e ingegneria.</p>
-                <footer>— Bill Gates</footer>
-            </blockquote>
+            <div class="about-grid">
+                <div class="text">
+                    <p>Frequento il quarto anno dell'indirizzo Informatica e Telecomunicazioni. Mi appassiona lo sviluppo software e l'architettura dei sistemi, con un occhio sempre rivolto alle nuove tecnologie.</p>
+                </div>
+                <blockquote>
+                    <p>"Il software è una combinazione di arte e ingegneria."</p>
+                    <footer>— Bill Gates</footer>
+                </blockquote>
+            </div>
         </section>
 
         <section id="competenze" class="sezione">
             <h2>Competenze</h2>
             <ul class="lista-competenze">
-                <li><strong>HTML & CSS</strong> — Struttura semantica e styling avanzato</li>
-                <li><strong>JavaScript</strong> — Basi in corso di apprendimento</li>
-                <li><strong>Linguaggi Core</strong> — C, C++, Java e Python</li>
-                <li><strong>Git</strong> — Versionamento e collaborazione su GitHub</li>
-                <li><strong>VS Code</strong> — Editor principale e ottimizzazione workflow</li>
+                <li><span>HTML & CSS</span> Struttura semantica e styling avanzato</li>
+                <li><span>JavaScript</span> Basi in corso di apprendimento</li>
+                <li><span>Linguaggi Core</span> C, C++, Java e Python</li>
+                <li><span>Git</span> Versionamento e collaborazione su GitHub</li>
+                <li><span>VS Code</span> Editor principale e ottimizzazione workflow</li>
             </ul>
         </section>
 
         <section id="progetti" class="sezione">
             <h2>Progetti</h2>
-            <div class="card">
-                <h3>Sviluppo Portfolio</h3>
-                <p>Raccolta di progetti HTML, CSS e Javascript svolti durante il percorso di studi.</p>
-                <a href="/cartellaBase/index.html" class="btn-small">Vai ai progetti</a>
+            <div class="grid-progetti">
+                <div class="card">
+                    <div class="card-tag">Web Dev</div>
+                    <h3>Sviluppo Portfolio</h3>
+                    <p>Raccolta di progetti HTML, CSS e Javascript svolti durante il percorso di studi.</p>
+                    <a href="/cartellaBase/index.html" class="btn-small">Visualizza →</a>
+                </div>
             </div>
         </section>
 
         <section id="faq" class="sezione">
-            <h2>FAQ</h2>
-            <div class="faq-item">
-                <h3>Qual è il tuo percorso di studi attuale?</h3>
-                <p>Frequento il 4° anno di Informatica e Telecomunicazioni allo Jean Monnet di Mariano Comense.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Che altri linguaggi conosci oltre al Web?</h3>
-                <p>Ho esperienza con C, C++, Java e Python.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Quali sono i tuoi obiettivi futuri?</h3>
-                <p>Dopo aver consolidato CSS e JavaScript, vorrei esplorare il mondo della sicurezza delle reti.</p>
+            <h2>Domande Frequenti</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3>Qual è il tuo percorso di studi?</h3>
+                    <p>Frequento il 4° anno di Informatica e Telecomunicazioni allo Jean Monnet di Mariano Comense.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Oltre al Web, cosa studi?</h3>
+                    <p>Ho esperienza con linguaggi di programmazione come C, C++, Java e Python.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Obiettivi futuri?</h3>
+                    <p>Dopo aver concluso il mio percorso di studi, vorrei speciallizarmi nella sistemistica di reti.</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer class="footer-principale">
-        <p>&copy; 2026 Timis Alexandro — Portfolio</p>
-        <ul>
-            <li><a href="https://github.com/simitprog" class="footer-link">GitHub</a></li>
-        </ul>
+        <p>&copy; 2026 Timis Alexandro</p>
+        <div class="footer-socials">
+            <a href="https://github.com/simitprog" class="footer-link">GitHub</a>
+        </div>
     </footer>
 
 </body>
