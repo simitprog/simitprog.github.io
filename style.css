@@ -1,10 +1,10 @@
 :root {
-    --bg-dark: #0f172a;       /* Sfondo principale profondo */
-    --bg-card: #1e293b;       /* Sfondo card e navigazione */
-    --accent: #ffb37b;        /* Arancione pesca per azioni e titoli */
-    --text-main: #f8fafc;     /* Bianco per testi principali */
-    --text-muted: #94a3b8;    /* Grigio/azzurro per testi secondari */
-    --border: #334155;        /* Bordi e separatori */
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b; 
+    --accent: #ffb37b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
     --transition: all 0.3s ease;
 }
 
@@ -33,7 +33,7 @@ body {
 
 #nav-principale {
     background-color: rgba(30, 41, 59, 0.95);
-    backdrop-filter: blur(10px); /* Effetto vetro sfocato */
+    backdrop-filter: blur(10px);
     padding: 1rem 0;
     position: sticky;
     top: 0;
@@ -60,8 +60,8 @@ body {
     list-style: none;
     display: flex;
     gap: 1.5rem;
-    justify-content: center; /* AGGIUNGI QUESTA RIGA PER CENTRARE */
-    width: 100%;             /* ASSICURATI CHE PRENDA TUTTO LO SPAZIO */
+    justify-content: center;
+    width: 100%;
 }
 
 .nav-link {

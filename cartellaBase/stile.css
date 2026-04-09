@@ -1,30 +1,28 @@
-/* --- VARIABILI COERENTI CON IL PORTFOLIO --- */
 :root {
-    --bg-dark: #0f172a;       /* Sfondo pagina */
-    --bg-container: #1e293b;  /* Sfondo scatola centrale */
-    --accent: #ffb37b;        /* Arancione pesca per i numeri e hover */
-    --text-main: #f8fafc;     /* Testo bianco */
-    --text-muted: #94a3b8;    /* Sottotitolo grigio */
-    --border: #334155;        /* Bordi dei tasti */
+    --bg-dark: #0f172a;
+    --bg-container: #1e293b;
+    --accent: #ffb37b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- BASE --- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark); /* Sfondo blu scuro */
+    background-color: var(--bg-dark);
     margin: 0;
     display: flex;
     justify-content: center;
     padding: 50px 20px;
     color: var(--text-main);
-    counter-reset: list-counter; /* Inizializza il contatore per i numeri */
+    counter-reset: list-counter;
 }
 
 .container {
     width: 100%;
-    max-width: 550px;
-    background: var(--bg-container); /* Card scura */
+    max-width: 1000px;
+    background: var(--bg-container);
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -38,63 +36,66 @@ header {
 
 h1 {
     margin: 0;
-    color: var(--text-main); /* Titolo bianco */
+    color: var(--text-main);
     font-size: 28px;
     letter-spacing: -1px;
 }
 
 .subtitle {
-    color: var(--text-muted); /* Grigio coordinato */
+    color: var(--text-muted);
     font-size: 0.95rem;
     margin-top: 8px;
 }
 
-/* --- LISTA PROGETTI --- */
 .project-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 
 .project-item {
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 .project-link {
     display: flex;
     align-items: center;
+    height: 100%;
     text-decoration: none;
     color: var(--text-main);
-    padding: 18px 25px;
-    background: rgba(255, 255, 255, 0.03); /* Sfondo quasi trasparente */
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
     border-radius: 12px;
     transition: var(--transition);
     font-weight: 600;
+    box-sizing: border-box;
 }
 
-/* --- IL CONTATORE NUMERICO (Quello che avevi prima) --- */
 .project-link::before {
     counter-increment: list-counter;
     content: counter(list-counter);
-    background: var(--bg-dark); /* Sfondo scuro per il cerchio */
-    color: var(--accent);       /* Numero arancione */
+    background: var(--bg-dark);
+    color: var(--accent);
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-right: 12px;
     font-size: 0.85rem;
-    border: 1px solid var(--accent); /* Cerchio arancione */
+    border: 1px solid var(--accent);
     transition: var(--transition);
 }
 
-/* --- STATI HOVER --- */
 .project-link:hover {
-    background-color: var(--accent); /* Il tasto diventa arancione */
-    color: var(--bg-dark);           /* Il testo diventa scuro per contrasto */
+    background-color: var(--accent);
+    color: var(--bg-dark);
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 10px 20px rgba(255, 179, 123, 0.2);
     border-color: var(--accent);
