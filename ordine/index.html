@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Q.ta</th>
+                <th>Descrizione</th>
+                <th>Costo Unitario</th>
+                <th>Totale</th>
+            </tr>
+        </thead>
+        <tbody id="corpo-tabella">
+            </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="tab-footer">
+                    <button onclick="calcola()">TOTALE ORDINE ---></button>
+                </td>
+                <td><input type="text" id="totale-ordine" value="0" readonly></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="controlli-extra">
+        Desidero ricevere notifiche 
+        <input type="radio" name="notifiche" value="si" checked> si
+        <input type="radio" name="notifiche" value="no"> no
+        <br>
+        E-mail: <input type="text" id="email">
+        <br>
+        Pagamento:
+        <select id="pagamento">
+            <option value="contanti">contanti</option>
+            <option value="carta di credito">carta di credito</option>
+            <option value="bonifico">bonifico</option>
+        </select>
+    </div>
+
+    <div class="pulsanti-finali">
+        <button onclick="invia()">INVIA ORDINE</button>
+        <button onclick="azzera()">AZZERA</button>
+    </div>
+
+    <div id="mex" style="color:red; margin-top:10px;"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
