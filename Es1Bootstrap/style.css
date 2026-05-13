@@ -1,0 +1,16 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.table thead th {
+    border-bottom: none;
+}
+
+.btn-danger {
+    padding: 2px 12px;
+}
