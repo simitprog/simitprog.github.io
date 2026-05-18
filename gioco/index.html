@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>RETRO RACER 🏎️</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Courier New', monospace;
+    }
+
+    #ui {
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    #scoreLabel {
+      font-size: 20px;
+      font-weight: bold;
+      color: #FFD700;
+    }
+
+    canvas {
+      border: 3px solid #555;
+      display: block;
+    }
+
+    /* Overlay iniziale / game over */
+    #overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.78);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+      pointer-events: none;
+    }
+
+    #overlay h1 {
+      font-size: 30px;
+      color: #FF4444;
+      letter-spacing: 5px;
+      margin-bottom: 14px;
+    }
+
+    #overlay p {
+      font-size: 13px;
+      color: #aaa;
+      letter-spacing: 2px;
+      margin: 5px 0;
+    }
+
+    #overlay .cta {
+      color: #FFD700;
+      margin-top: 20px;
+      font-size: 15px;
+      letter-spacing: 3px;
+    }
+
+    /* il canvas wrapper deve essere position:relative per l'overlay */
+    .wrapper {
+      position: relative;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HUD ── -->
+  <div id="ui">
+    <div id="scoreLabel">SCORE: <span id="scoreVal">0</span></div>
+    <div style="font-size:11px; color:#666; margin-top:3px;">← → oppure A / D per muoverti</div>
+  </div>
+
+  <!-- ── Canvas + Overlay ── -->
+  <div class="wrapper">
+    <canvas id="c" width="360" height="540"></canvas>
+
+    <div id="overlay">
+      <h1>RETRO RACER</h1>
+      <p>Evita le auto nemiche</p>
+      <p>← → oppure A / D per sterzare</p>
+      <p class="cta">[ SPAZIO ] per iniziare</p>
+    </div>
+  </div>
+
+  <script>
+    /* ════════════════════════════════════════════
+       RETRO RACER — endless top-down arcade racer
+       ════════════════════════════════════════════ */
+
+    const canvas  = document.getElementById('c');
+    const ctx     = canvas.getContext('2d');
+    const overlay = document.getElementById('overlay');
+    const scoreEl = document.getElementById('scoreVal');
+
+    const W = canvas.width;   // 360
+    const H = canvas.height;  // 540
+
+    // ── Limiti della carreggiata ──
+    const ROAD_LEFT  = 30;
+    const ROAD_RIGHT = W - 30;
+    const ROAD_W     = ROAD_RIGHT - ROAD_LEFT;
+
+    // ── Dimensioni veicoli ──
+    const PLAYER_W = 32;
+    const PLAYER_H = 52;
+    const ENEMY_W  = 32;
+    const ENEMY_H  = 52;
+
+    // ── Costanti gameplay ──
+    const PLAYER_SPEED  = 5;
+    const DASH_H        = 40;   // altezza trattino centrale
+    const DASH_GAP      = 30;   // spazio tra trattini
+    const ENEMY_COUNT   = 3;    // auto nemiche contemporanee
+
+    // ── Corsie disponibili per i nemici (3) ──
+    const lanes = [
+      ROAD_LEFT + 20,
+      ROAD_LEFT + ROAD_W / 2 - ENEMY_W / 2,
+      ROAD_RIGHT - ENEMY_W - 20
+    ];
+
+    // ── Stato globale ──
+    let score      = 0;
+    let running    = false;
+    let enemySpeed = 3;
+    let dashOffset = 0;
+    let animId     = null;
+
+    let player  = { x: 0, y: 0 };
+    let enemies = [];
+
+    // ── Input ──
+    const keys = {};
+    document.addEventListener('keydown', e => {
+      keys[e.key] = true;
+      // Spazio → avvia o riavvia
+      if (e.key === ' ') startGame();
+    });
+    document.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    /* ── Crea un nemico in posizione casuale ─────────────── */
+    function spawnEnemy(index) {
+      const lane = lanes[Math.floor(Math.random() * lanes.length)];
+      return {
+        x: lane,
+        y: -ENEMY_H - Math.random() * 200,           // parte sopra lo schermo
+        color: index % 2 === 0 ? '#4488FF' : '#FFCC00'
+      };
+    }
+
+    /* ── Inizializza tutti i nemici ──────────────────────── */
+    function resetEnemies() {
+      enemies = [];
+      for (let i = 0; i < ENEMY_COUNT; i++) {
+        enemies.push(spawnEnemy(i));
+      }
+    }
+
+    /* ── Avvia / riavvia il gioco ─────────────────────────── */
+    function startGame() {
+      score       = 0;
+      enemySpeed  = 3;
+      dashOffset  = 0;
+      scoreEl.textContent = '0';
+
+      // Posiziona player al centro in basso
+      player.x = W / 2 - PLAYER_W / 2;
+      player.y = H - 80;
+
+      resetEnemies();
+
+      overlay.style.display = 'none';
+      running = true;
+
+      if (animId) cancelAnimationFrame(animId);
+      loop();
+    }
+
+    /* ── Collisione AABB ─────────────────────────────────── */
+    function collides(ax, ay, aw, ah, bx, by, bw, bh) {
+      return ax < bx + bw &&
+             ax + aw > bx &&
+             ay < by + bh &&
+             ay + ah > by;
+    }
+
+    /* ── Disegna lo sfondo (erba) ───────────────────────── */
+    function drawBackground() {
+      ctx.fillStyle = '#1a3a1a';
+      ctx.fillRect(0, 0, ROAD_LEFT, H);
+      ctx.fillRect(ROAD_RIGHT, 0, W - ROAD_RIGHT, H);
+    }
+
+    /* ── Disegna la strada con bordi e linea centrale ─────── */
+    function drawRoad() {
+      // Asfalto
+      ctx.fillStyle = '#2a2a2a';
+      ctx.fillRect(ROAD_LEFT, 0, ROAD_W, H);
+
+      // Bordi bianchi
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(ROAD_LEFT,     0, 4, H);
+      ctx.fillRect(ROAD_RIGHT - 4, 0, 4, H);
+
+      // Linea tratteggiata centrale (si muove verso il basso)
+      ctx.fillStyle = '#888888';
+      const period = DASH_H + DASH_GAP;
+      const start  = (dashOffset % period) - DASH_H;
+      for (let y = start; y < H; y += period) {
+        ctx.fillRect(W / 2 - 2, y, 4, DASH_H);
+      }
+    }
+
+    /* ── Disegna un'auto generica ─────────────────────────── */
+    function drawCar(x, y, w, h, bodyColor, windowColor) {
+      // Carrozzeria principale
+      ctx.fillStyle = bodyColor;
+      ctx.fillRect(x, y, w, h);
+
+      // Lunotto / abitacolo
+      ctx.fillStyle = windowColor;
+      ctx.fillRect(x + 5, y + 10, w - 10, h - 22);
+
+      // Fari anteriori (in basso)
+      ctx.fillStyle = '#FFFFAA';
+      ctx.fillRect(x + 3,      y + h - 8, 8, 5);
+      ctx.fillRect(x + w - 11, y + h - 8, 8, 5);
+
+      // Fanali posteriori (in alto) — rossi
+      ctx.fillStyle = '#FF4444';
+      ctx.fillRect(x + 3,      y + 3, 8, 4);
+      ctx.fillRect(x + w - 11, y + 3, 8, 4);
+    }
+
+    /* ── Disegna il player ────────────────────────────────── */
+    function drawPlayer() {
+      drawCar(player.x, player.y, PLAYER_W, PLAYER_H, '#CC2222', '#881111');
+    }
+
+    /* ── Disegna tutti i nemici ───────────────────────────── */
+    function drawEnemies() {
+      for (const e of enemies) {
+        const win = e.color === '#4488FF' ? '#224488' : '#886600';
+        drawCar(e.x, e.y, ENEMY_W, ENEMY_H, e.color, win);
+      }
+    }
+
+    /* ── Game Over ────────────────────────────────────────── */
+    function endGame() {
+      running = false;
+      overlay.innerHTML = `
+        <h1>GAME OVER</h1>
+        <p>Punteggio finale</p>
+        <p style="color:#FFD700; font-size:26px; margin-top:8px;">${score}</p>
+        <p class="cta" style="margin-top:20px; color:#FFD700; font-size:15px; letter-spacing:3px;">
+          [ SPAZIO ] per riprovare
+        </p>
+      `;
+      overlay.style.display = 'flex';
+    }
+
+    /* ══════════════════════════════════════════════
+       LOOP PRINCIPALE
+       ══════════════════════════════════════════════ */
+    function loop() {
+      if (!running) return;
+
+      /* 1) INPUT — muovi il player */
+      if ((keys['ArrowLeft']  || keys['a'] || keys['A']) && player.x > ROAD_LEFT + 2) {
+        player.x -= PLAYER_SPEED;
+      }
+      if ((keys['ArrowRight'] || keys['d'] || keys['D']) && player.x + PLAYER_W < ROAD_RIGHT - 2) {
+        player.x += PLAYER_SPEED;
+      }
+
+      /* 2) AGGIORNA TRATTINI stradali */
+      dashOffset += enemySpeed;
+
+      /* 3) AGGIORNA NEMICI */
+      for (let i = 0; i < enemies.length; i++) {
+        enemies[i].y += enemySpeed;
+
+        // Uscito dal fondo → punto + respawn
+        if (enemies[i].y > H) {
+          score++;
+          scoreEl.textContent = score;
+
+          // Incremento difficoltà ogni 10 punti (max velocità 12)
+          if (score % 10 === 0 && enemySpeed < 12) {
+            enemySpeed += 0.5;
+          }
+
+          enemies[i] = spawnEnemy(i);
+          continue;
+        }
+
+        /* 4) COLLISIONE con player → fine partita */
+        if (collides(player.x, player.y, PLAYER_W, PLAYER_H,
+                     enemies[i].x, enemies[i].y, ENEMY_W, ENEMY_H)) {
+          endGame();
+          return;
+        }
+      }
+
+      /* 5) DISEGNA frame */
+      ctx.clearRect(0, 0, W, H);
+      drawBackground();
+      drawRoad();
+      drawEnemies();
+      drawPlayer();
+
+      /* 6) PROSSIMO frame */
+      animId = requestAnimationFrame(loop);
+    }
+
+  </script>
+</body>
+</html>
